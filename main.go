@@ -4,13 +4,10 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"timebox.com/initializers"
+	"timebox.com/controllers"
 )
 
-func pingHandler(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "pong",
-	})
-}
+
 
 func init() {
 	initializers.LoadEnvVariables()
@@ -19,6 +16,10 @@ func init() {
 
 func main() {
 	r := gin.Default()
-	r.GET("/", pingHandler)
+	r.POST("/projects", controllers.ProjectsCreate)
+	r.GET("/projects", controllers.ProjectsIndex)
+	r.GET("/projects/:id", controllers.ProjectsShow)
+	r.PUT("/projects/:id", controllers.ProjectsUpdate)
+	r.DELETE("/projects/:id", controllers.ProjectsDelete)
 	r.Run() // listen and serve on 0.0.0.0:8080
 } 
